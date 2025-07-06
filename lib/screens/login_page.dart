@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '/screens/signup.dart';
-import '/screens/home_screen.dart';
 import '/bloc/auth_bloc.dart';
 import '/bloc/auth_event.dart';
 import '/bloc/auth_state.dart';
@@ -38,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Sign In')),
+      appBar: AppBar(automaticallyImplyLeading: false, title: Text('Sign In')),
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthSuccess) {
@@ -110,7 +109,10 @@ class _LoginPageState extends State<LoginPage> {
                                 );
                               }
                             },
-                      child: Text('Sign In'),
+                      child: Text(
+                        'Sign In',
+                        style: TextStyle(color: Colors.black),
+                      ),
                     );
                   },
                 ),
@@ -122,7 +124,11 @@ class _LoginPageState extends State<LoginPage> {
                       MaterialPageRoute(builder: (context) => SignUpPage()),
                     );
                   },
-                  child: Text('Don\'t have an account? Sign Up'),
+                  child: Text(
+                    'Don\'t have an account? Sign Up',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  style: TextButton.styleFrom(backgroundColor: Colors.blue),
                 ),
               ],
             ),

@@ -38,12 +38,11 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Sign Up')),
+      appBar: AppBar(automaticallyImplyLeading: false, title: Text('Sign Up')),
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthSuccess) {
             _showSnackBar('Account created successfully!');
-            ScaffoldMessenger.of(context).clearSnackBars();
             Navigator.pushReplacementNamed(context, '/login');
           } else if (state is AuthFailure) {
             _showSnackBar(state.error, isError: true);
@@ -124,7 +123,10 @@ class _SignUpPageState extends State<SignUpPage> {
                                 ),
                               ),
                             )
-                          : Text('Sign Up'),
+                          : Text(
+                              'Sign Up',
+                              style: TextStyle(color: Colors.black),
+                            ),
                     );
                   },
                 ),
@@ -137,7 +139,11 @@ class _SignUpPageState extends State<SignUpPage> {
                       MaterialPageRoute(builder: (context) => LoginPage()),
                     );
                   },
-                  child: Text('Already have an account? Log In'),
+                  child: Text(
+                    'Already have an account? Log In',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  style: TextButton.styleFrom(backgroundColor: Colors.blue),
                 ),
               ],
             ),
