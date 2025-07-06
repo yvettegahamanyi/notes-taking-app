@@ -6,17 +6,17 @@ class NoteDialog extends StatefulWidget {
   final bool isEditing;
 
   const NoteDialog({
-    Key? key,
+    super.key,
     this.initialText,
     required this.onSave,
     this.isEditing = false,
-  }) : super(key: key);
+  });
 
   @override
-  _NoteDialogState createState() => _NoteDialogState();
+  NoteDialogState createState() => NoteDialogState();
 }
 
-class _NoteDialogState extends State<NoteDialog> {
+class NoteDialogState extends State<NoteDialog> {
   late TextEditingController _controller;
 
   @override

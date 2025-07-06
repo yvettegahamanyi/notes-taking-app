@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter/gestures.dart';
 import '/screens/signup.dart';
 import '/screens/home_screen.dart';
 import '/bloc/auth_bloc.dart';
