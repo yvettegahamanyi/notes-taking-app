@@ -139,11 +139,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       MaterialPageRoute(builder: (context) => LoginPage()),
                     );
                   },
-                  child: Text(
-                    'Already have an account? Log In',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  style: TextButton.styleFrom(backgroundColor: Colors.blue),
+                  child: Text('Already have an account? Log In'),
                 ),
               ],
             ),
