@@ -35,83 +35,87 @@ class _SignUpPageState extends State<SignUpPage> {
             Navigator.pushReplacementNamed(context, '/verify-email');
           }
         },
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Email Field
-              TextFormField(
-                controller: _emailController,
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                  labelText: 'Email',
-                  border: OutlineInputBorder(),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // Email Field
+                TextFormField(
+                  controller: _emailController,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    labelText: 'Email',
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your email';
+                    }
+                    if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                      return 'Please enter a valid email';
+                    }
+                    return null;
+                  },
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your email';
-                  }
-                  if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                    return 'Please enter a valid email';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 16),
+                SizedBox(height: 16),
 
-              // Password Field
-              TextFormField(
-                controller: _passwordController,
-                obscureText: _obscurePassword,
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                  border: OutlineInputBorder(),
+                // Password Field
+                TextFormField(
+                  controller: _passwordController,
+                  obscureText: _obscurePassword,
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter a password';
+                    }
+                    if (value.length < 6) {
+                      return 'Password must be at least 6 characters';
+                    }
+                    return null;
+                  },
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a password';
-                  }
-                  if (value.length < 6) {
-                    return 'Password must be at least 6 characters';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 16),
+                SizedBox(height: 16),
 
-              // Sign Up Button
-              BlocBuilder<AuthBloc, AuthState>(
-                builder: (context, state) {
-                  return ElevatedButton(
-                    onPressed: state is AuthLoading
-                        ? null
-                        : () {
-                            if (_formKey.currentState!.validate()) {
-                              context.read<AuthBloc>().add(
-                                SignUpRequested(
-                                  _emailController.text,
-                                  _passwordController.text,
-                                ),
-                              );
-                            }
-                          },
-                    child: Text('Sign Up'),
-                  );
-                },
-              ),
+                // Sign Up Button
+                BlocBuilder<AuthBloc, AuthState>(
+                  builder: (context, state) {
+                    return ElevatedButton(
+                      onPressed: state is AuthLoading
+                          ? null
+                          : () {
+                              if (_formKey.currentState!.validate()) {
+                                context.read<AuthBloc>().add(
+                                  SignUpRequested(
+                                    _emailController.text,
+                                    _passwordController.text,
+                                  ),
+                                );
+                              }
+                            },
+                      child: Text('Sign Up'),
+                    );
+                  },
+                ),
 
-              SizedBox(height: 16),
-              TextButton(
-                onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => LoginPage()),
-                  );
-                },
-                child: Text('Already have an account? Log In'),
-              ),
-            ],
+                SizedBox(height: 16),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginPage()),
+                    );
+                  },
+                  child: Text('Already have an account? Log In'),
+                ),
+              ],
+            ),
           ),
         ),
       ),
