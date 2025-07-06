@@ -25,6 +25,16 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
+  void _showSnackBar(String message, {bool isError = false}) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: isError ? Colors.red : Colors.green,
+        duration: const Duration(seconds: 3),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,10 +42,10 @@ class _LoginPageState extends State<LoginPage> {
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthSuccess) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => HomeScreen()),
-            );
+            _showSnackBar('Login successful!');
+            Navigator.pushReplacementNamed(context, '/home');
+          } else if (state is AuthFailure) {
+            _showSnackBar(state.error, isError: true);
           }
         },
         child: Form(

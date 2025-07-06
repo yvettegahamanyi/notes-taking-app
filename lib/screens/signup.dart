@@ -25,6 +25,16 @@ class _SignUpPageState extends State<SignUpPage> {
     super.dispose();
   }
 
+  void _showSnackBar(String message, {bool isError = false}) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: isError ? Colors.red : Colors.green,
+        duration: const Duration(seconds: 3),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +42,11 @@ class _SignUpPageState extends State<SignUpPage> {
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthSuccess) {
-            Navigator.pushReplacementNamed(context, '/verify-email');
+            _showSnackBar('Account created successfully!');
+            ScaffoldMessenger.of(context).clearSnackBars();
+            Navigator.pushReplacementNamed(context, '/login');
+          } else if (state is AuthFailure) {
+            _showSnackBar(state.error, isError: true);
           }
         },
         child: Padding(
@@ -99,7 +113,18 @@ class _SignUpPageState extends State<SignUpPage> {
                                 );
                               }
                             },
-                      child: Text('Sign Up'),
+                      child: state is AuthLoading
+                          ? SizedBox(
+                              height: 20,
+                              width: 20,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  Colors.white,
+                                ),
+                              ),
+                            )
+                          : Text('Sign Up'),
                     );
                   },
                 ),
